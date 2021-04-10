@@ -1,4 +1,10 @@
 package list;
 
-public abstract class AbstractLinkedList<T> {
+import interfase.LinkedList;
+
+/**
+ *
+ * @param <T>
+ */
+public abstract class AbstractLinkedList<T> implements LinkedList<T> {
 }
