@@ -31,14 +31,16 @@ public interface LinkedList<T>  extends Iterable<T> {
     Node<T> getLastNode() throws NoSuchElementException;
 
     /**
-     *
+     * Returns a reference to de Node that precedes the Node referenced by target in the list. It is assumed
+     * that target corresponds to a Node in the list
      * @param target
      * @return
      */
     Node<T> getNodeBefore(Node<T> target);
 
     /**
-     *
+     * Returns a reference to the Node that follows the Node referenced by target in the list. It is assumed
+     * that the target Node corresponds to a valid Node in the list
      * @param target
      * @return
      */
@@ -51,20 +53,26 @@ public interface LinkedList<T>  extends Iterable<T> {
     void addFirstNode(Node<T> newNode);
 
     /**
-     *
+     * Insets a node newNode at the end of the list, making the newNode the last node in the list. Its assumed
+     * that newNode is a valid node for the current implementation and not an existing node in any list.
      * @param newNode
      */
     void addLastNode(Node<T> newNode);
 
     /**
-     *
+     * Inserts a node newNode immediately after the node referenced by target. It is assumed that target
+     * corresponds to a node currently in the list. It is also assumed that newNode is a valid node for
+     * the current implementation and no an existing node in any list. If valid, the size of the list
+     * increases by 1.
      * @param target
      * @param newNode
      */
     void addNodeAfter(Node<T> target, Node<T> newNode);
 
     /**
-     *
+     * Inserts a node newNode that will be immediately before the Node being referenced by Target.
+     * Its assumed that the target corresponds to a Node in the list. Its also assumed that newNode
+     * is a valid node for the current implementation and is not an existing node in  any list.
      * @param target
      * @param newNode
      */
