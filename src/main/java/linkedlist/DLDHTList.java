@@ -1,4 +1,4 @@
-package list;
+package linkedlist;
 
 public class DLDHTList<T> {
 }

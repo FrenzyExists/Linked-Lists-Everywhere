@@ -49,7 +49,8 @@ public class SNode<T> implements Node<T> {
      */
     @Override
     public void clean() {
-
+        this.element = null;
+        this. nextNode = null;
     }
 
     /**

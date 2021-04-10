@@ -8,6 +8,16 @@ import interfase.Node;
  * @param <T>
  */
 public class DNode<T> implements Node<T> {
+
+    // References
+    private T element;
+    private Node<T> nextNode, previousNode;
+
+    // Constructor
+    public DNode() {
+        this.previousNode = this.nextNode =  null;
+    }
+
     /**
      * Returns a reference to the Element T
      *
@@ -15,7 +25,7 @@ public class DNode<T> implements Node<T> {
      */
     @Override
     public T getElement() {
-        return null;
+        return this.element;
     }
 
     /**
@@ -25,7 +35,7 @@ public class DNode<T> implements Node<T> {
      */
     @Override
     public void setElement(T e) {
-
+        this.element = e;
     }
 
     /**
@@ -33,6 +43,8 @@ public class DNode<T> implements Node<T> {
      */
     @Override
     public void clean() {
-
+        this.element = null;
+        this.previousNode = null;
+        this.nextNode = null;
     }
 }
