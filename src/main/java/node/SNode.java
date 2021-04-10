@@ -2,6 +2,11 @@ package node;
 
 import interfase.Node;
 
+/**
+ * The simplest type of node. This is a node which there is a reference to an element and a reference to another node
+ * of the same type. This type of node is used to implement any SinglyLinkedList ADT
+ * @param <T>
+ */
 public class SNode<T> implements Node<T> {
 
     // References
@@ -23,7 +28,6 @@ public class SNode<T> implements Node<T> {
 
     /**
      * Returns a reference to the Element T
-     *
      * @return Element T
      */
     @Override
@@ -33,7 +37,6 @@ public class SNode<T> implements Node<T> {
 
     /**
      * Overrides the reference to the Element T for a new Element T
-     *
      * @param e The new Element T which will replace the older one
      */
     @Override
@@ -41,5 +44,27 @@ public class SNode<T> implements Node<T> {
         this.element = e;
     }
 
+    /**
+     * Overrides all fields of node to null
+     */
+    @Override
+    public void clean() {
 
+    }
+
+    /**
+     * Returns a reference to the next node
+     * @return next node
+     */
+    public Node<T> getNext() {
+        return this.nextNode;
+    }
+
+    /**
+     * Overrides the reference to the Element T for a new Element T
+     * @param next - the new node to become next
+     */
+    public void setNext(Node<T> next) {
+        this.nextNode = next;
+    }
 }

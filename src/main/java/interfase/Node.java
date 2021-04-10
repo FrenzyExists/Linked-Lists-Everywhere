@@ -18,4 +18,9 @@ public interface Node<T> {
      * @param e The new Element T which will replace the older one
      */
     void setElement(T e);
+
+    /**
+     * Overrides all fields of node to null
+     */
+    public void clean();
 }

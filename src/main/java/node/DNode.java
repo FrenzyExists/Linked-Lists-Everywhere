@@ -3,7 +3,8 @@ package node;
 import interfase.Node;
 
 /**
- *
+ * Another node, but this one however contains a reference to an element T, a reference to the next node and
+ * a reference to the previous node
  * @param <T>
  */
 public class DNode<T> implements Node<T> {
@@ -24,6 +25,14 @@ public class DNode<T> implements Node<T> {
      */
     @Override
     public void setElement(T e) {
+
+    }
+
+    /**
+     * Overrides all fields of node to null
+     */
+    @Override
+    public void clean() {
 
     }
 }
