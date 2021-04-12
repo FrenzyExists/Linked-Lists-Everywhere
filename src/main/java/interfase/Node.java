@@ -23,4 +23,10 @@ public interface Node<T> {
      * Overrides all fields of node to null
      */
     public void clean();
+
+    /**
+     * Returns a reference to the next node
+     * @return the next node
+     */
+    Node<T> getNext();
 }

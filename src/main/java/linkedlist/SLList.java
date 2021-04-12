@@ -2,12 +2,13 @@ package linkedlist;
 
 import interfase.LinkedList;
 import interfase.Node;
+import node.SNode;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SLList<E> implements LinkedList<E> {
-    private SNode<E> first;
+public class SLList<T> implements LinkedList<T> {
+    private SNode<T> first;
     private int length;
 
     public SLList() {   // to create an empty list instance
@@ -15,81 +16,86 @@ public class SLList<E> implements LinkedList<E> {
         length = 0;
     }
 
-    public void addFirstNode(Node<E> nuevo) {
+    public void addFirstNode(Node<T> nuevo) {
         // Pre: nuevo is not a node in the list
-        ((SNode<E>) nuevo).setNext(first);
-        first = (SNode<E>) nuevo;
+        ((SNode<T>) nuevo).setNext(first);
+        first = (SNode<T>) nuevo;
         length++;
     }
 
-    public void addLastNode(Node<E> nuevo) {
-        SNode<E> sNuevo = (SNode<E>) nuevo;
+    public void addLastNode(Node<T> nuevo) {
+        SNode<T> sNuevo = (SNode<T>) nuevo;
         sNuevo.setNext(null);
         if (length == 0)
             first = sNuevo;
         else {   // find current last node and add the new one after that last node
-            SNode<E> p = first;
+            SNode<T> p = first;
             while (p.getNext() != null)
-                p = p.getNext();
+                p = (SNode<T>) p.getNext();
             p.setNext(sNuevo);
         }
         length++;
     }
 
-    public void addNodeAfter(Node<E> target, Node<E> nuevo) {
+    public void addNodeAfter(Node<T> target, Node<T> nuevo) {
         // Pre: target is a node in the list
         // Pre: nuevo is not a node in the list
-        ((SNode<E>) nuevo).setNext(((SNode<E>) target).getNext());
-        ((SNode<E>) target).setNext((SNode<E>) nuevo);
+        ((SNode<T>) nuevo).setNext(target.getNext());
+        ((SNode<T>) target).setNext(nuevo);
         length++;
     }
 
-    public void addNodeBefore(Node<E> target, Node<E> nuevo) {
+    public void addNodeBefore(Node<T> target, Node<T> nuevo) {
         // Pre: target is a node in the list
         // Pre: nuevo is not a node in the list
 
         if (target == first)
             this.addFirstNode(nuevo);
         else {
-            Node<E> prevNode = findNodePrevTo(target);
+            Node<T> prevNode = findNodePrevTo(target);
             this.addNodeAfter(prevNode, nuevo);
         }
     }
 
-    private Node<E> findNodePrevTo(Node<E> target) {
+    private Node<T> findNodePrevTo(Node<T> target) {
         // Pre: target is a node in the list
         if (target == first)  // the list is empty
             return null;
         else {
-            SNode<E> prev = first;
+            SNode<T> prev = first;
             while (prev != null && prev.getNext() != target)
-                prev = prev.getNext();
+                prev = (SNode<T>) prev.getNext();
             return prev;
         }
     }
 
-    public Node<E> getLastNode() {
+    public Node<T> getLastNode() {
         if (first == null)   // the list is empty
             return null;
         else {
-            SNode<E> curr = first;
-            while (((SNode<E>) curr).getNext() != null)
-                curr = curr.getNext();
+            SNode<T> curr = first;
+            while (curr.getNext() != null)
+                curr = (SNode<T>) curr.getNext();
             return curr;
         }
     }
 
-    public Node<E> getNodeAfter(Node<E> target) {
+    public Node<T> getNodeAfter(Node<T> target) {
         // Pre: target is a node in the list
-        SNode<E> aNode = ((SNode<E>) target).getNext();
-        if (aNode == null)
-            return null;
-        else
-            return aNode;
+//        SNode<T> aNode = (SNode<T>) ((SNode<T>) target).getNext();
+//        if (aNode == null)
+//            return null;
+//        else
+//            return aNode;
+        return ((SNode<T>) target).getNext();
     }
 
-
-    public Node<E> getNodeBefore(Node<E> target) {
+    /**
+     *
+     * @param target
+     * @return
+     */
+    public Node<T> getNodeBefore(Node<T> target) {
         // Pre: target is a node in the list
         if (target == first)
             return null;
@@ -97,25 +103,38 @@ public class SLList<E> implements LinkedList<E> {
             return findNodePrevTo(target);
     }
 
+    /**
+     * 
+     * @return
+     */
     public int length() {
         return this.length;
     }
 
-    public void removeNode(Node<E> target) {
+    /**
+     * 
+     * @param target - the Node desired to remove from the list, assuming it exists in the list
+     */
+    public void removeNode(Node<T> target) {
         // Pre: target is a node in the list; hence, the list is not empty
 
         if (target == first)
-            first = first.getNext();
+            first = (SNode<T>) first.getNext();
         else {
-            SNode<E> prevNode = (SNode<E>) this.getNodeBefore(target);
-            prevNode.setNext(((SNode<E>) target).getNext());
+            SNode<T> prevNode = (SNode<T>) this.getNodeBefore(target);
+            prevNode.setNext(target.getNext());
         }
-        ((SNode<E>) target).clean();   // clear all references from target
+        target.clean();   // clear all references from target
         length--;
     }
 
 
-    public Node<E> getFirstNode()
+    /**
+     * 
+     * @return
+     * @throws NoSuchElementException
+     */
+    public Node<T> getFirstNode()
             throws NoSuchElementException {
         if (first == null)
             throw new NoSuchElementException("getFirstNode() : linked list is empty...");
@@ -134,7 +153,7 @@ public class SLList<E> implements LinkedList<E> {
      */
     private void destroy() {
         while (first != null) {
-            SNode<E> nnode = first.getNext();
+            SNode<T> nnode = (SNode<T>) first.getNext();
             first.setElement(null);
             first.setNext(null);
             first = nnode;
@@ -157,79 +176,35 @@ public class SLList<E> implements LinkedList<E> {
         length = 0;
     }
 
-    public Node<E> createNewNode() {
-        return new SNode<E>();
+    /**
+     * 
+     * @return
+     */
+    public Node<T> createNewNode() {
+        return new SNode<T>();
     }
-
+    
     @Override
-    public Iterable<Node<E>> nodes() {
+    public Iterable<Node<T>> nodes() {
         return new NodesIterable();
     }
 
 
     @Override
-    public Iterator<E> iterator() {
+    public Iterator<T> iterator() {
         return new ElementsIterator();
     }
 
-
-    /**
-     * Class to represent a node of the type used in singly linked lists.
-     *
-     * @param <T> Data type of element in a node.
-     * @author pedroirivera-vega
-     */
-    protected static class SNode<T> implements Node<T> {
-        private T element;
-        private SNode<T> next;
-
-        public SNode() {
-            element = null;
-            next = null;
-        }
-
-        public SNode(T data, SNode<T> next) {
-            this.element = data;
-            this.next = next;
-        }
-
-        public SNode(T data) {
-            this.element = data;
-            next = null;
-        }
-
-        public T getElement() {
-            return element;
-        }
-
-        public void setElement(T data) {
-            this.element = data;
-        }
-
-        public SNode<T> getNext() {
-            return next;
-        }
-
-        public void setNext(SNode<T> next) {
-            this.next = next;
-        }
-
-        public void clean() {
-            element = null;
-            next = null;
-        }
-    }
-
-    private class NodesIterable implements Iterable<Node<E>> {
+    private class NodesIterable implements Iterable<Node<T>> {
 
         @Override
-        public Iterator<Node<E>> iterator() {
+        public Iterator<Node<T>> iterator() {
             return new NodesIterator();
         }
 
     }
 
-    private class ElementsIterator implements Iterator<E> {
+    private class ElementsIterator implements Iterator<T> {
 
         NodesIterator nodesIter = new NodesIterator();
 
@@ -239,7 +214,7 @@ public class SLList<E> implements LinkedList<E> {
         }
 
         @Override
-        public E next() {
+        public T next() {
             return nodesIter.next().getElement();
         }
 
@@ -248,24 +223,24 @@ public class SLList<E> implements LinkedList<E> {
         }
     }
 
-    private class NodesIterator implements Iterator<Node<E>> {
+    private class NodesIterator implements Iterator<Node<T>> {
 
-        private SNode<E> curr = first;    // node containing element to return on next next()
-        private SNode<E> ptntr = null;   // node preceding node valid to be removed
+        private SNode<T> curr = first;    // node containing element to return on next next()
+        private SNode<T> ptntr = null;   // node preceding node valid to be removed
         private boolean canRemove = false;       // to control when remove() is valid to execute
 
         public boolean hasNext() {
             return curr != null;
         }
 
-        public SNode<E> next() {
+        public SNode<T> next() {
             if (!hasNext())
                 throw new NoSuchElementException("Iterator is completed.");
             if (canRemove)
-                ptntr = (ptntr == null ? first : ptntr.getNext());  // Why this? Think...
+                ptntr = (ptntr == null ? first : (SNode<T>) ptntr.getNext());  // Why this? Think...
             canRemove = true;
-            SNode<E> ntr = curr;
-            curr = curr.getNext();   // get element and prepare for future
+            SNode<T> ntr = curr;
+            curr = (SNode<T>) curr.getNext();   // get element and prepare for future
             return ntr;
         }
 
@@ -273,7 +248,7 @@ public class SLList<E> implements LinkedList<E> {
             if (!canRemove)
                 throw new IllegalStateException("Not valid to remove.");
             if (ptntr == null)
-                first = first.getNext();             // removes the first node
+                first = (SNode<T>) first.getNext();             // removes the first node
             else
                 ptntr.setNext(ptntr.getNext().getNext());     // removes node after ptntr
             length--;

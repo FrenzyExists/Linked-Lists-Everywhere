@@ -8,43 +8,56 @@ import interfase.Node;
  * @param <T>
  */
 public class DNode<T> implements Node<T> {
-
-    // References
     private T element;
-    private Node<T> nextNode, previousNode;
+    private DNode<T> prev, next;
 
-    // Constructor
+    // Constructors
     public DNode() {
-        this.previousNode = this.nextNode =  null;
+        this(null, null, null);
     }
 
-    /**
-     * Returns a reference to the Element T
-     *
-     * @return Element T
-     */
-    @Override
+    public DNode(T e) {
+        this(e, null, null);
+    }
+
+    public DNode(T e, DNode<T> p, DNode<T> n) {
+        element = e;
+        prev = p;
+        next = n;
+    }
+
+    // Methods
+    public DNode<T> getPrev() {
+        return prev;
+    }
+
+    public void setPrev(DNode<T> prev) {
+        this.prev = prev;
+    }
+
+    public DNode<T> getNext() {
+        return next;
+    }
+
+    public void setNext(DNode<T> next) {
+        this.next = next;
+    }
+
     public T getElement() {
-        return this.element;
+        return element;
+    }
+
+
+    public void setElement(T data) {
+        element = data;
     }
 
     /**
-     * Overrides the reference to the Element T for a new Element T
-     *
-     * @param e The new Element T which will replace the older one
+     * Just set all fields to null.
      */
-    @Override
-    public void setElement(T e) {
-        this.element = e;
-    }
-
-    /**
-     * Overrides all fields of node to null
-     */
-    @Override
     public void clean() {
-        this.element = null;
-        this.previousNode = null;
-        this.nextNode = null;
+        element = null;
+        prev = next = null;
     }
+
 }

@@ -57,6 +57,7 @@ public class SNode<T> implements Node<T> {
      * Returns a reference to the next node
      * @return next node
      */
+    @Override
     public Node<T> getNext() {
         return this.nextNode;
     }
@@ -69,3 +70,5 @@ public class SNode<T> implements Node<T> {
         this.nextNode = next;
     }
 }
+
+
