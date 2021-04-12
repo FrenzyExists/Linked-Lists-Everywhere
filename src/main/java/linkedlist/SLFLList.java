@@ -162,7 +162,7 @@ public class SLFLList<T> implements LinkedList<T>
     }
 
     /**
-     * 
+     *
      */
     private class NodesIterator implements Iterator<Node<T>> {
         private SNode<T> curr = first;
