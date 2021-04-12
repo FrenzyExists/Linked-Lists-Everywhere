@@ -9,7 +9,7 @@ public class IndexListTester {
      */
     public static void main(String[] args) {
         listTester("Testing the singly linked list (SLList): ",
-                new LLIndexList<Integer>(new SLList<Integer>()));
+                new LLIndexList<>(new SLList<>()));
     }
 
     private static void listTester(String msg, IndexList<Integer> list) {
