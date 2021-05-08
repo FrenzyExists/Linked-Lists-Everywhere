@@ -9,7 +9,7 @@
 
 The second Data Structures Project I made during Data Structures, that's it
 
-ATM you can't run anything as I haven't implemented any of the types of linkedlist. They gave us this like 2 or 3 days ago and I have other courses y'know :\
+ATM you can't run anything as I haven't implemented any of the types of linkedLists. They gave us this like 2 or 3 days ago and I have other courses y'know :\
 
 #### In case you find an issue, throw an issue on the github, and I'll see what I can do :D
 

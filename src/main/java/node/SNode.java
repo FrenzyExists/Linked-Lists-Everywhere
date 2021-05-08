@@ -3,6 +3,8 @@ package node;
 import interfase.Node;
 
 /**
+ * @author frenzy
+ *
  * The simplest type of node. This is a node which there is a reference to an element and a reference to another node
  * of the same type. This type of node is used to implement any SinglyLinkedList ADT
  * @param <T>

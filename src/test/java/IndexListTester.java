@@ -1,6 +1,6 @@
 import indexlist.LLIndexList;
 import interfase.IndexList;
-import linkedlist.SLList;
+import linkedLists.SLList;
 
 public class IndexListTester {
 

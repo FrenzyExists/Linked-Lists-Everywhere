@@ -1,6 +1,6 @@
 package interfase;
 
-public interface IndexList<T> {
+public interface IndexList<T> extends Cloneable {
 
     /**
      * Gets the size of the index list (number of elements).

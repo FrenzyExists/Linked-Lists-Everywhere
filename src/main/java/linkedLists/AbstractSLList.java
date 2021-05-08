@@ -1,4 +1,4 @@
-package linkedlist;
+package linkedLists;
 
 import interfase.LinkedList;
 import interfase.Node;

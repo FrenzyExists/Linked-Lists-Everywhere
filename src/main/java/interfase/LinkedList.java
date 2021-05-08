@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
  * LinkedList ADT, from which this whole project is about
  * @param <T>
  */
-public interface LinkedList<T>  extends Iterable<T> {
+public interface LinkedList<T> extends Iterable<T>, Cloneable {
 
     /**
      * Returns the size of the linked list (the amount of nodes linked)

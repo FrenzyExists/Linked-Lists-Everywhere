@@ -1,18 +1,22 @@
-package linkedlist;
+package linkedLists;
 
 import interfase.LinkedList;
 import interfase.Node;
-import node.DNode;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class DLDHDTList<T> implements LinkedList<T> {
+public class DLDHDTList<T> extends AbstractDLList<T> {
     private DNode<T> header, trailer;
     private int length;
 
+    //constructor:
     public DLDHDTList() {
-        // ADD CODE HERE to generate empty linked list of this type 
+        header = new DNode<>();
+        trailer =new DNode<>();
+        header.setNext(trailer);
+        trailer.setPrev(header);
+        length = 0;
     }
 
     public void addFirstNode(Node<T> newNode) {
@@ -40,8 +44,17 @@ public class DLDHDTList<T> implements LinkedList<T> {
         length++;
     }
 
-    public void addNodeBefore(Node<T> target, Node<T> newNode) {
-        // ADD CODE HERE
+    public void addNodeBefore(Node<T> target, Node<T> nuevo) {
+        DNode<T> targetNode = (DNode<T>) target;
+        DNode<T> newNode = (DNode<T>) nuevo;
+
+        newNode.setPrev(targetNode.getPrev());
+        newNode.setNext(targetNode);
+
+        targetNode.setPrev(newNode);
+        targetNode.setNext(targetNode.getNext());
+
+        length++;
     }
 
     public Node<T> createNewNode() {
@@ -100,7 +113,10 @@ public class DLDHDTList<T> implements LinkedList<T> {
      * doubly linked list with dummy header and dummy trailer nodes. 
      */
     public void makeEmpty() {
-        // TODO
+        DNode<T> dummyTrailerNode = header;
+        while(trailer.getNext() != null) {
+            dummyTrailerNode.setNext(null);
+        }
     }
 
     @Override
@@ -113,5 +129,18 @@ public class DLDHDTList<T> implements LinkedList<T> {
     public Iterator<T> iterator() {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public LinkedList<T> clone() {
+        LinkedList<T> listClone = new DLDHDTList<>(); //or new DLDHDTList<>();, depends which clone you are implementing
+
+        for (T e : this) {
+            //---- Copy the information from each node in this list into a temporary node that will then be added into the clone of this list. ----//
+            Node<T> tempNode = listClone.createNewNode();
+            tempNode.setElement(e);
+            listClone.addLastNode(tempNode);
+        }
+        return listClone;
     }
 }
