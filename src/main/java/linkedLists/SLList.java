@@ -2,12 +2,11 @@ package linkedLists;
 
 import interfase.LinkedList;
 import interfase.Node;
-import node.SNode;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SLList<T> implements LinkedList<T> {
+public class SLList<T> extends AbstractSLList<T> {
     private SNode<T> first;
     private int length;
 
@@ -31,7 +30,7 @@ public class SLList<T> implements LinkedList<T> {
         else {   // find current last node and add the new one after that last node
             SNode<T> p = first;
             while (p.getNext() != null)
-                p = (SNode<T>) p.getNext();
+                p = p.getNext();
             p.setNext(sNuevo);
         }
         length++;
@@ -40,8 +39,8 @@ public class SLList<T> implements LinkedList<T> {
     public void addNodeAfter(Node<T> target, Node<T> nuevo) {
         // Pre: target is a node in the list
         // Pre: nuevo is not a node in the list
-        ((SNode<T>) nuevo).setNext(target.getNext());
-        ((SNode<T>) target).setNext(nuevo);
+        ((SNode<T>) nuevo).setNext((SNode<T>) target.getNext());
+        ((SNode<T>) target).setNext((SNode<T>) nuevo);
         length++;
     }
 
@@ -64,7 +63,7 @@ public class SLList<T> implements LinkedList<T> {
         else {
             SNode<T> prev = first;
             while (prev != null && prev.getNext() != target)
-                prev = (SNode<T>) prev.getNext();
+                prev = prev.getNext();
             return prev;
         }
     }
@@ -75,18 +74,13 @@ public class SLList<T> implements LinkedList<T> {
         else {
             SNode<T> curr = first;
             while (curr.getNext() != null)
-                curr = (SNode<T>) curr.getNext();
+                curr = curr.getNext();
             return curr;
         }
     }
 
     public Node<T> getNodeAfter(Node<T> target) {
         // Pre: target is a node in the list
-//        SNode<T> aNode = (SNode<T>) ((SNode<T>) target).getNext();
-//        if (aNode == null)
-//            return null;
-//        else
-//            return aNode;
         return ((SNode<T>) target).getNext();
     }
 
@@ -119,10 +113,10 @@ public class SLList<T> implements LinkedList<T> {
         // Pre: target is a node in the list; hence, the list is not empty
 
         if (target == first)
-            first = (SNode<T>) first.getNext();
+            first = first.getNext();
         else {
             SNode<T> prevNode = (SNode<T>) this.getNodeBefore(target);
-            prevNode.setNext(target.getNext());
+            prevNode.setNext((SNode<T>) target.getNext());
         }
         target.clean();   // clear all references from target
         length--;
@@ -153,7 +147,7 @@ public class SLList<T> implements LinkedList<T> {
      */
     private void destroy() {
         while (first != null) {
-            SNode<T> nnode = (SNode<T>) first.getNext();
+            SNode<T> nnode = first.getNext();
             first.setElement(null);
             first.setNext(null);
             first = nnode;
@@ -181,7 +175,7 @@ public class SLList<T> implements LinkedList<T> {
      * @return
      */
     public Node<T> createNewNode() {
-        return new SNode<T>();
+        return new SNode<>();
     }
     
     @Override
@@ -237,10 +231,10 @@ public class SLList<T> implements LinkedList<T> {
             if (!hasNext())
                 throw new NoSuchElementException("Iterator is completed.");
             if (canRemove)
-                ptntr = (ptntr == null ? first : (SNode<T>) ptntr.getNext());  // Why this? Think...
+                ptntr = (ptntr == null ? first : ptntr.getNext());  // Why this? Think...
             canRemove = true;
             SNode<T> ntr = curr;
-            curr = (SNode<T>) curr.getNext();   // get element and prepare for future
+            curr = curr.getNext();   // get element and prepare for future
             return ntr;
         }
 
@@ -248,12 +242,24 @@ public class SLList<T> implements LinkedList<T> {
             if (!canRemove)
                 throw new IllegalStateException("Not valid to remove.");
             if (ptntr == null)
-                first = (SNode<T>) first.getNext();             // removes the first node
+                first = first.getNext();             // removes the first node
             else
                 ptntr.setNext(ptntr.getNext().getNext());     // removes node after ptntr
             length--;
             canRemove = false;
         }
 
+    }
+
+    @Override
+    public LinkedList<T> clone() {
+        LinkedList<T> listClone = new SLList<>(); //or new DLDHDTList<>();, depends which clone you are implementing
+        for (T e : this) {
+            //---- Copy the information from each node in this list into a temporary node that will then be added into the clone of this list. ----//
+            Node<T> tempNode = listClone.createNewNode();
+            tempNode.setElement(e);
+            listClone.addLastNode(tempNode);
+        }
+        return listClone;
     }
 }

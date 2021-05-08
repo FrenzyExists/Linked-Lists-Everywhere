@@ -58,18 +58,18 @@ public class DLDHDTList<T> extends AbstractDLList<T> {
     }
 
     public Node<T> createNewNode() {
-        return new DNode<T>();
+        return new DNode<>();
     }
 
     public Node<T> getFirstNode() throws NoSuchElementException {
         if (length == 0)
-            return null;
+            throw new NoSuchElementException("getFirstNode: The list is empty");
         return header.getNext();
     }
 
     public Node<T> getLastNode() throws NoSuchElementException {
         if (length == 0)
-            return null;
+            throw new NoSuchElementException("getFirstNode: The list is empty");
         return trailer.getPrev();
     }
 
@@ -85,10 +85,18 @@ public class DLDHDTList<T> extends AbstractDLList<T> {
         return ((DNode<T>) target).getPrev();
     }
 
+    /**
+     *
+     * @return
+     */
     public int length() {
         return length;
     }
 
+    /**
+     *
+     * @param target - the Node desired to remove from the list, assuming it exists in the list
+     */
     public void removeNode(Node<T> target) {
         DNode<T> tNode = (DNode<T>) target; //targeted node
         tNode.getPrev().setNext(tNode.getNext());
@@ -107,9 +115,9 @@ public class DLDHDTList<T> extends AbstractDLList<T> {
      */
     private void destroy() {
         while (header != null) {
-            DNode<T> nnode = header.getNext();
+            DNode<T> nodeToBeDestroyed = header.getNext();
             header.clean();
-            header = nnode;
+            header = nodeToBeDestroyed;
         }
     }
 
@@ -125,18 +133,55 @@ public class DLDHDTList<T> extends AbstractDLList<T> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterable<Node<T>> nodes() {
-        // TODO Auto-generated method stub
-        return null;
+        return new DLDHDTList<T>.NodesIterable();
     }
 
+    private class NodesIterable implements Iterable<Node<T>> {
+
+        @Override
+        public Iterator<Node<T>> iterator() {
+            return new DLDHDTList<T>.NodesIterator();
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<T> iterator() {
-        // TODO Auto-generated method stub
-        return null;
+        return new DLDHDTList<T>.ElementsIterator();
     }
 
+    private class ElementsIterator implements Iterator<T> {
+
+        DLDHDTList<T>.NodesIterator nodesIter = new DLDHDTList<T>.NodesIterator();
+
+        @Override
+        public boolean hasNext() {
+            return nodesIter.hasNext();
+        }
+
+        @Override
+        public T next() {
+            return nodesIter.next().getElement();
+        }
+
+        public void remove() {
+            nodesIter.remove();
+        }
+    }
+
+    /**
+     * 
+     * @return
+     */
     @Override
     public LinkedList<T> clone() {
         LinkedList<T> listClone = new DLDHDTList<>(); //or new DLDHDTList<>();, depends which clone you are implementing
@@ -150,6 +195,9 @@ public class DLDHDTList<T> extends AbstractDLList<T> {
         return listClone;
     }
 
+    /**
+     * 
+     */
     private class NodesIterator implements Iterator<Node<T>> {
         private DNode<T> curr = header.getNext();
         private DNode<T> ptntr = null;
@@ -170,6 +218,9 @@ public class DLDHDTList<T> extends AbstractDLList<T> {
             return ntr;
         }
 
+        /**
+         * 
+         */
         public void remove() {
             if (!canRemove)
                 throw new IllegalStateException("Not valid to remove.");
