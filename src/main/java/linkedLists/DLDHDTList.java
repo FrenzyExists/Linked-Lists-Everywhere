@@ -74,13 +74,15 @@ public class DLDHDTList<T> extends AbstractDLList<T> {
     }
 
     public Node<T> getNodeAfter(Node<T> target) {
-        // ADD CODE HERE AND MODIFY RETURN ACCORDINGLY
-        return null;
+        if (length == 0)
+            throw new NoSuchElementException("getNodeAfter: list is empty");
+        return ((DNode<T>) target).getNext();
     }
 
     public Node<T> getNodeBefore(Node<T> target) {
-        // ADD CODE HERE AND MODIFY RETURN ACCORDINGLY
-        return null;
+        if (length == 0)
+            throw new NoSuchElementException("getNodeBefore: list is empty");
+        return ((DNode<T>) target).getPrev();
     }
 
     public int length() {
@@ -88,7 +90,11 @@ public class DLDHDTList<T> extends AbstractDLList<T> {
     }
 
     public void removeNode(Node<T> target) {
-        // ADD CODE HERE to disconnect target from the linked list, reduce lent, clean target...
+        DNode<T> tNode = (DNode<T>) target; //targeted node
+        tNode.getPrev().setNext(tNode.getNext());
+        tNode.getNext().setPrev(tNode.getPrev());
+        length--;
+        tNode.clean();
     }
 
     /**
@@ -142,5 +148,37 @@ public class DLDHDTList<T> extends AbstractDLList<T> {
             listClone.addLastNode(tempNode);
         }
         return listClone;
+    }
+
+    private class NodesIterator implements Iterator<Node<T>> {
+        private DNode<T> curr = header.getNext();
+        private DNode<T> ptntr = null;
+        private boolean canRemove = false;
+
+        public boolean hasNext() {
+            return curr != null;
+        }
+
+        public DLDHDTList.DNode<T> next() {
+            if (!hasNext())
+                throw new NoSuchElementException("Iterator is completed.");
+            if (canRemove)
+                ptntr = (ptntr == null ? curr : ptntr.getNext());
+            canRemove = true;
+            DLDHDTList.DNode<T> ntr = curr;
+            curr = curr.getNext();
+            return ntr;
+        }
+
+        public void remove() {
+            if (!canRemove)
+                throw new IllegalStateException("Not valid to remove.");
+            if (ptntr == null)
+                curr = curr.getNext();
+            else
+                ptntr.setNext(ptntr.getNext().getNext());
+            length--;
+            canRemove = false;
+        }
     }
 }
