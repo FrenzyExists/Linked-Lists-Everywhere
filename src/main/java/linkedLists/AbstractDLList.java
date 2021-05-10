@@ -1,7 +1,7 @@
 package linkedLists;
 
-import interfase.LinkedList;
-import interfase.Node;
+import interfases.LinkedList;
+import interfases.Node;
 
 /**
  * Class to represent a node of the type used in doubly linked lists.

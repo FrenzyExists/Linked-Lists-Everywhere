@@ -1,4 +1,4 @@
-package interfase;
+package interfases;
 
 public interface IndexList<T> extends Cloneable {
 

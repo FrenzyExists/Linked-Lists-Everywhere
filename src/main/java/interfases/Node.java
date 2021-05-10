@@ -1,4 +1,4 @@
-package interfase;
+package interfases;
 
 /**
  * A node is a dataholder place. A simple node can hold one data element of type T, and supports operations to set

@@ -1,15 +1,23 @@
 import indexlist.LLIndexList;
-import interfase.IndexList;
+import interfases.IndexList;
+import linkedLists.DLDHDTList;
+import linkedLists.SLFLList;
 import linkedLists.SLList;
 
+/**
+ * @author frenzy
+ */
 public class IndexListTester {
 
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
         listTester("Testing the singly linked list (SLList): ",
-                new LLIndexList<>(new SLList<>()));
+                new LLIndexList<Integer>(new SLList<>()));
+        System.out.println("\n*******************************************************************************************\n");
+        listTester("Testing the singly linked list (SLFLList): ",
+                new LLIndexList<Integer>(new SLFLList<>()));
+        System.out.println("\n*******************************************************************************************\n");
+        listTester("Testing the singly linked list (DLDHDTList): ",
+                new LLIndexList<Integer>(new DLDHDTList<>()));
     }
 
     private static void listTester(String msg, IndexList<Integer> list) {

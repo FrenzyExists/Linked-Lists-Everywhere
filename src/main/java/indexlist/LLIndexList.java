@@ -1,8 +1,8 @@
 package indexlist;
 
-import interfase.IndexList;
-import interfase.LinkedList;
-import interfase.Node;
+import interfases.IndexList;
+import interfases.LinkedList;
+import interfases.Node;
 
 public class LLIndexList<T> implements IndexList<T> {
 

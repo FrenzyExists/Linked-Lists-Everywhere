@@ -1,7 +1,7 @@
 package linkedLists;
 
-import interfase.LinkedList;
-import interfase.Node;
+import interfases.LinkedList;
+import interfases.Node;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
